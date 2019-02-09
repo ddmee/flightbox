@@ -9,6 +9,10 @@ import datetime
 
 class Logbox(object):
     """Logbox contains what has been traced in a big list of dict entries"""
+
+    # default to a using a shared directory across instances of this class
+    directory = "flight-recordings/"
+
     def __init__(self):
         self._box = []
 
@@ -59,8 +63,9 @@ class Logbox(object):
 
         Return absolute path (str) to pickled file saved to disk.
         """
-        directory = "flight-recordings/"
+        directory = self.directory
         if not os.path.isdir(directory):
+            # if it already exists but is a file, os should throw an error
             os.mkdir(directory)
 
         timestamp = datetime.datetime.now().strftime("%y-%m-%dT%H-%M-%S")

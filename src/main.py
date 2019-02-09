@@ -1,35 +1,40 @@
 import argparse
 import sys
 from importlib import import_module
-
+from pprint import pprint as pprint
 
 GLOBAL_LIST = []
 
+def extract_locals(frame):
+    return {local: frame.f_locals.get(local) for local in frame.f_code.co_varnames}
+
+def extract_names(frame):
+    return {local: frame.f_locals.get(local) for local in frame.f_code.co_names}
 
 def log_line(frame):
     info = {'event': 'line', 'line_no': frame.f_lineno,
-    'scope': frame.f_code.co_name, 'vars': frame.f_code.co_names}
+    'scope': frame.f_code.co_name, 'locals': extract_locals(frame),
+    'co_names': extract_names(frame)}
     GLOBAL_LIST.append(info)
 
 
 def log_return(frame, arg):
     info = {'event': 'return', 'line_no': frame.f_lineno,
-    'scope': frame.f_code.co_name, 'vars': frame.f_code.co_names,
-    'return_value': arg}
+    'scope': frame.f_code.co_name, 'locals': extract_locals(frame),
+    'return_value': arg, 'co_names': extract_names(frame)}
     GLOBAL_LIST.append(info)
-
 
 def log_call(frame, arg):
     info = {'event': 'call', 'line_no': frame.f_lineno,
-    'scope': frame.f_code.co_name, 'vars': frame.f_code.co_names,
-    'call_value': arg}
+    'scope': frame.f_code.co_name, 'vars': extract_locals(frame),
+    'call_value': arg, 'co_names': extract_names(frame)}
     GLOBAL_LIST.append(info)
 
 
 def log_exception(frame, arg):
     info = {'event': 'exception', 'line_no': frame.f_lineno,
-    'scope': frame.f_code.co_name, 'vars': frame.f_code.co_names,
-    'exception_value': arg}
+    'scope': frame.f_code.co_name, 'vars': extract_locals(frame),
+    'exception_value': arg, 'co_names': extract_names(frame)}
     GLOBAL_LIST.append(info)
 
 
@@ -83,7 +88,8 @@ def main():
     sys.settrace(tracer.hook)
     import_module(args.module_to_import)
     for x in GLOBAL_LIST:
-        print x
+        pprint(x)
+        print "\n"
 
 
 if __name__ == '__main__':

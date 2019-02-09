@@ -61,7 +61,7 @@ class Logbox(object):
         Will save the logbox into a directory in the cwd called 'flight-recordings'.
         The file-extension is saves it with is '.fb'
 
-        Return absolute path (str) to pickled file saved to disk.
+        Return path (str) to pickled file saved to disk.
         """
         directory = self.directory
         if not os.path.isdir(directory):
@@ -92,6 +92,8 @@ class Logbox(object):
         with open(path, "wb") as box_file:
             pickle.dump(self._box, box_file)
 
+        return path
+
 
 class Tracer(object):
     def __init__(self, target):
@@ -106,7 +108,6 @@ class Tracer(object):
         if self.target in frame.f_code.co_filename:
             # Good, we are in the module we want to trace
             # Log the line we are at and return the tracer
-            self.box.log_line(frame)
             return self.tracer
         else:
             # Else don't hook this, do nothing

@@ -60,7 +60,7 @@ def rec_executor(module):
 
     # save it to disk
     flightrecording = tracer.box.pickle()
-    print "Save flightbox to %s" % flightrecording
+    print "\nSAVED flightbox to %s" % flightrecording
 
 
 def replay_executor(flightbox=None, barf=False):

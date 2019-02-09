@@ -1,7 +1,7 @@
 import glob  # just import a random module, do not log in glob
 
 def hello_name(name):
-    print "hello %s" % name # @log line 4, value of name
+    print "hello %s from example1.py" % name # @log line 4, value of name
 
 
 def add(x, y):

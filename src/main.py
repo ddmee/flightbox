@@ -8,27 +8,27 @@ GLOBAL_LIST = []
 
 def log_line(frame):
     info = {'event': 'line', 'line_no': frame.f_lineno,
-    'scope': frame.f_code.co_name, 'vars': frame.f_code.}
+    'scope': frame.f_code.co_name, 'vars': frame.f_code.co_names}
     GLOBAL_LIST.append(info)
 
 
 def log_return(frame, arg):
     info = {'event': 'return', 'line_no': frame.f_lineno,
-    'scope': frame.f_code.co_name, 'vars': frame.f_code.,
+    'scope': frame.f_code.co_name, 'vars': frame.f_code.co_names,
     'return_value': arg}
     GLOBAL_LIST.append(info)
 
 
 def log_call(frame, arg):
     info = {'event': 'call', 'line_no': frame.f_lineno,
-    'scope': frame.f_code.co_name, 'vars': frame.f_code.,
+    'scope': frame.f_code.co_name, 'vars': frame.f_code.co_names,
     'call_value': arg}
     GLOBAL_LIST.append(info)
 
 
 def log_exception(frame, arg):
     info = {'event': 'exception', 'line_no': frame.f_lineno,
-    'scope': frame.f_code.co_name, 'vars': frame.f_code.,
+    'scope': frame.f_code.co_name, 'vars': frame.f_code.co_names,
     'exception_value': arg}
     GLOBAL_LIST.append(info)
 

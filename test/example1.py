@@ -6,6 +6,7 @@ def hello_name(name):
 
 def add(x, y):
     result = x + y  # log @line 10, x, y and result values
+    hello_name("brendan")
     return result # log @line 9, x, y and result values
 
 hello_name("donal") # log @line 11,

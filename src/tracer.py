@@ -103,6 +103,7 @@ class Tracer(object):
         self.box = Logbox()
 
     def hook(self, frame, event, arg):
+        self.box.log_call(frame, arg)
         # self.target is just the last part of the path
         # whereas co_filename is probably the whole path
         if self.target in frame.f_code.co_filename:
@@ -114,6 +115,7 @@ class Tracer(object):
             return None
 
     def tracer(self, frame, event, arg):
+        # print event
         if self.target not in frame.f_code.co_filename:
             return None  # if we aren't the target file do nothing
         else:
